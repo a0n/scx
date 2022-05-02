@@ -26,7 +26,7 @@ SET row_security = off;
 CREATE SCHEMA blog;
 
 
-ALTER SCHEMA blog OWNER TO root;
+ALTER SCHEMA blog OWNER TO root;   -- The owner is root - maybe a user with lesser privileges would be cool - but that is not really the scope of the exercice - so thats ok.
 
 --
 -- TOC entry 3350 (class 0 OID 0)
@@ -34,7 +34,7 @@ ALTER SCHEMA blog OWNER TO root;
 -- Name: SCHEMA blog; Type: COMMENT; Schema: -; Owner: root
 --
 
-COMMENT ON SCHEMA blog IS 'scx blog schema';
+COMMENT ON SCHEMA blog IS 'scx blog schema';     -- Using Postgresql Comments! Very Good.
 
 
 SET default_tablespace = '';
@@ -51,9 +51,9 @@ CREATE TABLE blog.comment (
     user_id integer NOT NULL,
     post_id integer NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    deleted_at timestamp with time zone,
+    deleted_at timestamp with time zone,    -- Using a never delete anything approach per default. Good!
     content text,
-    comment_id integer
+    comment_id integer                      -- building a tree of comments - very good!
 );
 
 
@@ -65,7 +65,7 @@ ALTER TABLE blog.comment OWNER TO root;
 -- Name: COLUMN comment.comment_id; Type: COMMENT; Schema: blog; Owner: root
 --
 
-COMMENT ON COLUMN blog.comment.comment_id IS 'The parent comment id of this comment';
+COMMENT ON COLUMN blog.comment.comment_id IS 'The parent comment id of this comment';   -- could be named parent_comment_id but very good practice to explain it as a column comment
 
 
 --
@@ -73,11 +73,12 @@ COMMENT ON COLUMN blog.comment.comment_id IS 'The parent comment id of this comm
 -- Name: edit; Type: TABLE; Schema: blog; Owner: root
 --
 
+-- A table to track activities on other tables - nice!
 CREATE TABLE blog.edit (
     id integer NOT NULL,
     user_id integer NOT NULL,
-    entity_name text,
-    "from" text
+    entity_name text,               -- polymorphic association? would the entity name be a composite of ClassName and ID of an object?, down below entity_name and entity_id are stored (and thats how rails does polymorphic associations), maybe that should have been a NOT NULL column as well
+    "from" text                     -- not sure, what will be stored here?
 );
 
 
@@ -91,7 +92,7 @@ ALTER TABLE blog.edit OWNER TO root;
 CREATE TABLE blog.post (
     id integer NOT NULL,
     user_id integer NOT NULL,
-    created_at timestamp with time zone,
+    created_at timestamp with time zone,          -- should be NOT NULL as well
     deleted_at timestamp with time zone,
     content text NOT NULL,
     published_at timestamp with time zone
@@ -105,6 +106,7 @@ ALTER TABLE blog.post OWNER TO root;
 -- Name: star; Type: TABLE; Schema: blog; Owner: root
 --
 
+-- this table shares similarities to blog.edit - here everything looks good, i would have added a "created_at" timestamp here as well, as well as maybe a deleted_at timestamp.
 CREATE TABLE blog.star (
     id integer NOT NULL,
     user_id integer NOT NULL,
@@ -120,6 +122,7 @@ ALTER TABLE blog.star OWNER TO root;
 -- Name: user; Type: TABLE; Schema: blog; Owner: root
 --
 
+-- Maybe the email or the name as well as the "joined_at" column should be NOT NULL here.
 CREATE TABLE blog."user" (
     id integer NOT NULL,
     name text,
@@ -138,6 +141,8 @@ ALTER TABLE blog."user" OWNER TO root;
 -- Name: view; Type: TABLE; Schema: blog; Owner: root
 --
 
+
+-- same here the "timestamp" should be NOT NULL as well, column name could be improved by choosing a '_at' column name like the other timestamps
 CREATE TABLE blog.view (
     id integer NOT NULL,
     user_id integer NOT NULL,
@@ -201,6 +206,9 @@ ALTER TABLE ONLY blog."user"
 ALTER TABLE ONLY blog.view
     ADD CONSTRAINT view_pkey PRIMARY KEY (id);
 
+
+
+-- Added foreign key constraints. GOOD!
 
 --
 -- TOC entry 3201 (class 2606 OID 16417)
