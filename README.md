@@ -12,13 +12,15 @@ What's included is just a simple hello world blog schema with a few foriegn keys
 * `make database`
 
 An instance of postgresql and pgadmin are deployed locally through compose, and `schema.sql` is loaded. You may alternatively use `docker compose up|down|rm` commands to manage the containers.
-
 ### run
 * http://localhost:5050  (credentials in compose.yaml)
 or
 * docker exec -ti pg_container psql
 
 `schema.sql` is loaded as the named schema "blog" in the "root" database. `\d blog.*`
+
+### eval
+many good ideas an practices. more columns should be constrained with NOT NULL though.
 
 ## Api Client
 
@@ -36,6 +38,9 @@ The guide asks for the the 200 most _recent_ TODOs, and while there are exactly 
 * `./api-client.js --help`
 * `./api-client.js --resource photos list --id 20-30,45,2-5`
 
+### eval
+Good Libary selection, Nice Patterns used like async/await, modern js code.
+Good Idea to make a commandline tool. Design of the CLI could be a little bit more intuitive - but thats only my opinion.
 ## String Permutations
 ### requirements
 any recent golang: `brew install go`
