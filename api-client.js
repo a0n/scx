@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// Good Library Picks!
 import { Command } from 'commander';
 import axios from 'axios';
 const apiClient = new Command();
@@ -11,9 +12,10 @@ apiClient
   .option('-r, --resource <name>', 'name resource to act upon', 'todos');
 
 apiClient.command('list')
-  .alias('get')
+  .alias('get')   // i would not have used an alias but a dedicated command here. but that is just my opinion.
   .description('list or get a resource')
   .option('-i, --id <identifier>', 'id of the resource to get', (value) => {
+    // Nice Pattern used here!
     return value.split(',').map((id) => {
       let range = id.match(/^([0-9]+)-([0-9]+)$/)
       if (range) {
@@ -29,7 +31,7 @@ apiClient.command('list')
     if (options.id)  {
       // this query parameter handling pattern will not scale
       // instead the server must implement more robust filtering and pagination
-      const idQueryParams = options.id.map((id) => { return `id=${id}` }).join('&');
+      const idQueryParams = options.id.map((id) => { return `id=${id}` }).join('&');  // NICE!
       response = await axios.get(`${URL}/${command.parent.opts().resource}?${idQueryParams}`);
     } else {
       response = await axios.get(`${URL}/${command.parent.opts().resource}`);
@@ -44,7 +46,7 @@ apiClient.command('list')
 apiClient.command('create')
   .description('create a resource')
   .action(async (options, command) => {
-    const response = await axios.post(`${URL}/${command.parent.opts().resource}`);
+    const response = await axios.post(`${URL}/${command.parent.opts().resource}`); // there is no content in the body of the post request, we can only create empty objects here.
     console.log(response.data);
   });
 
@@ -57,3 +59,4 @@ apiClient.command('delete')
   });
 
 apiClient.parse();
+// missing line break at the last line
