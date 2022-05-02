@@ -279,3 +279,6 @@ ALTER TABLE ONLY blog.view
 -- PostgreSQL database dump complete
 --
 
+
+
+-- Maybe some common indexes would have been nice!
