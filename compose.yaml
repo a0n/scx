@@ -1,3 +1,8 @@
+# Very Good Practice! to build a self contained setup here with Docker and Compose
+# This is the new way of doing "Compose" with Docker - as it uses the internal compose command of the docker-cli
+# instead of the old dedicated docker-compose, this is so new i could not even test it with our current setup, because we run an older docker
+# version that does not support this.
+
 version: "3"
 services:
   db:
@@ -10,7 +15,7 @@ services:
     volumes:
     - type: bind
       source: schema.sql
-      target: /docker-entrypoint-initdb.d/schema.sql
+      target: /docker-entrypoint-initdb.d/schema.sql    # Using Entrypoint initdb.d, Nice!
     ports:
     - "5432:5432"
   pgadmin:
@@ -18,7 +23,7 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: roo@localhost
+      PGADMIN_DEFAULT_EMAIL: roo@localhost   # Container won't start with this. gives an error that the email address is invalid. adding a TOP-Level domain ending fixes the issue
       PGADMIN_DEFAULT_PASSWORD: root
     volumes:
     - type: bind
