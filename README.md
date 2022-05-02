@@ -19,7 +19,7 @@ or
 
 `schema.sql` is loaded as the named schema "blog" in the "root" database. `\d blog.*`
 
-### eval
+### review
 many good ideas an practices. more columns should be constrained with NOT NULL though.
 
 ## Api Client
@@ -38,7 +38,7 @@ The guide asks for the the 200 most _recent_ TODOs, and while there are exactly 
 * `./api-client.js --help`
 * `./api-client.js --resource photos list --id 20-30,45,2-5`
 
-### eval
+### review
 Good Libary selection, Nice Patterns used like async/await, modern js code.
 Good Idea to make a commandline tool. Design of the CLI could be a little bit more intuitive - but thats only my opinion.
 ## String Permutations
@@ -52,4 +52,8 @@ Go was chosen because for its strong performance profile for algorthmic work whi
 * `make permutations`
 
 ### run
-* `./permutations permutations.sample.txt`
+* `./permutation
+
+### review
+code is concise, the fact that go is used is a plus!
+can't review in depth because i have not worked with go before.
